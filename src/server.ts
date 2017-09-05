@@ -1,11 +1,18 @@
 import 'reflect-metadata';
 import 'zone.js/dist/zone-node';
-import { platformServer, renderModuleFactory } from '@angular/platform-server';
+import { renderModuleFactory } from '@angular/platform-server';
 import { enableProdMode } from '@angular/core';
 import { AppServerModuleNgFactory } from '../dist/ngfactory/src/app/app.server.module.ngfactory';
 import * as express from 'express';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+
+
+const contentful = require('contentful')
+const contenfulClient = contentful.createClient({
+  space: process.env.CONTENTFUL_SPACE,
+  accessToken: process.env.CONTENTFUL_TOKEN
+});
 
 const PORT = process.env.PORT || 4000;
 
@@ -26,6 +33,21 @@ app.engine('html', (_, options, callback) => {
 
 app.set('view engine', 'html');
 app.set('views', 'src');
+
+app.get('/api/:type', (req, res) => {
+  contenfulClient.getEntries()
+    .then(response => {
+      res.send(
+        response.items
+          .filter(item => item.sys.contentType.sys.id === req.params.type)
+          .map(item => item.fields)
+      );
+    })
+    .catch(err => {
+      console.error(err);
+      res.send(JSON.stringify(err));
+    });
+});
 
 app.get('*.*', express.static(join(__dirname, '..', 'dist')));
 

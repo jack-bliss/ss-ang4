@@ -20,4 +20,8 @@ export class CurrentUserService {
     return user;
   }
 
+  get user(){
+    return user;
+  }
+
 }

@@ -1,2 +1,6 @@
 <h1>Home</h1>
 <p>This is the home page</p>
+<div class="hidden" *ngFor="let band of bands">
+  <h3>{{band.name}}</h3>
+  <span *ngFor="let album of band.albums">{{album}}</span>
+</div>

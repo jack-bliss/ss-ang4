@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <h1>Campus Society</h1>
-<h3 *ngIf="currentUser.loggedIn()">Welcome, {{currentUser.name}}</h3>
+<h3 *ngIf="currentUser.loggedIn()">Welcome, {{currentUser.user.name}}</h3>
 <p>Attempting some server side rendering.</p>
 
 <router-outlet></router-outlet>
