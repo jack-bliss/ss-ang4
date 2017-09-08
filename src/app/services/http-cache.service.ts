@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class AsyncCacherService {
+export class HttpCacherService {
 
   server: boolean;
   store: any = null;

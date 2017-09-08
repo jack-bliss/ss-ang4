@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { BandDetailComponent } from './band-detail/band-detail.component';
 
 import { StringManipService } from './services/string-manip.service';
-import { AsyncCacherService } from './services/async-cacher.service';
+import { HttpCacherService } from './services/http-cache.service';
 import { AsyncDataStoreComponent } from './async-data-store/async-data-store.component';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { AsyncDataStoreComponent } from './async-data-store/async-data-store.com
   ],
   providers: [
     StringManipService,
-    AsyncCacherService
+    HttpCacherService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AsyncCacherService } from '../services/async-cacher.service';
+import { HttpCacherService } from '../services/http-cache.service';
 
 let cheekyCache;
 if (typeof document !== 'undefined') {
@@ -26,7 +26,7 @@ if (typeof document !== 'undefined') {
 export class AsyncDataStoreComponent implements OnInit {
 
   constructor(
-    private async: AsyncCacherService
+    private http: HttpCacherService
   ) {
 
   }
@@ -35,8 +35,8 @@ export class AsyncDataStoreComponent implements OnInit {
   cacheString: string;
 
   ngOnInit() {
-    this.async.watch(this);
-    if (this.async.server) {
+    this.http.watch(this);
+    if (this.http.server) {
       this.setCache([]);
     } else {
       this.setCache(cheekyCache);

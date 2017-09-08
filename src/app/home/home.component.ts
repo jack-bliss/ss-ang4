@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
 
 import { StringManipService } from '../services/string-manip.service';
-import { AsyncCacherService } from '../services/async-cacher.service';
+import { HttpCacherService } from '../services/http-cache.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -17,14 +16,17 @@ export class HomeComponent implements OnInit {
   bands: any[];
 
   constructor(
-    private http: Http,
-    private async: AsyncCacherService
+    private http: HttpCacherService
   ) {
 
   }
 
+  shoutSomething() {
+    console.log('HEY!!');
+  }
+
   ngOnInit() {
-    this.async.get('http://localhost:4000/api/bands').then(bands => {
+    this.http.get('http://localhost:4000/api/bands').then(bands => {
       this.bands = bands.map(band => {
         band.route = StringManipService.urlify(band.name);
         return band;
