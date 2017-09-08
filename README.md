@@ -1,28 +1,13 @@
-# SsAng4
+# Server Side Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.4.
+Have a look at `src/app/services/async-cacher` and `src/app/async-data-store`. These two files together are responsible for preventing the flashing content.
 
-## Development server
+When the app is running on the server, all requests through async-cacher are stored in async-data-store's cache, which is rendered to the dom each time.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+When the app is running on the client, it first checks to see if #async-data-store exists, and if it does, parse its contents into the cache.
 
-## Code scaffolding
+Then, whenever a request through async-cacher is made, it first checks the contents of the cache. Additionally, requests made when the app is running on the server will also first check the cache to improve performance for API requests made to the same and point.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+The cache tracks how many times each end point was used during server-side bootstrapping. This ensures that future calls made during the app's client-side run time do not hit the cache.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+All of this is a series of heuristics, and it involevs directly quierying the DOM during client-side bootstrapping, which I'd expect many people to be uncomfortable with, but it works.
