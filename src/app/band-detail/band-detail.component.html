@@ -1,0 +1,8 @@
+<div *ngIf="band">
+  <h3>
+    {{band.name}}
+  </h3>
+  <p *ngFor="let album of band.albums">
+    {{album}}
+  </p>
+</div>

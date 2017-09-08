@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prestart": "ng build --prod && ngc",
-    "start": "ts-node src/server.ts"
+    "watch": "ng build --watch -op dist/",
+    "start": "ngc && ts-node src/server.ts"
   },
   "private": true,
   "dependencies": {

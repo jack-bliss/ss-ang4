@@ -1,11 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<h1>Campus Society</h1>
-<h3 *ngIf="currentUser.loggedIn()">Welcome, {{currentUser.user.name}}</h3>
+<h1><a routerLink="/">Bandar</a></h1>
 <p>Attempting some server side rendering.</p>
 
 <router-outlet></router-outlet>
 
-<div class="footer">
-  <a routerLink="/">Home</a>
-  <a *ngIf="!currentUser.loggedIn()" routerLink="/login">Log In</a>
-</div>
+<app-async-data-store></app-async-data-store>

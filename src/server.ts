@@ -27,7 +27,7 @@ app.engine('html', (_, options, callback) => {
   const opts = { document: template, url: options.req.url };
 
   renderModuleFactory(AppServerModuleNgFactory, opts)
-    .then(html => callback(null, html));
+    .then(html => callback(null, html)).catch(err => callback(err, null));
 
 });
 
@@ -41,6 +41,23 @@ app.get('/api/:type', (req, res) => {
         response.items
           .filter(item => item.sys.contentType.sys.id === req.params.type)
           .map(item => item.fields)
+      );
+    })
+    .catch(err => {
+      console.error(err);
+      res.send(JSON.stringify(err));
+    });
+});
+app.get('/api/band/:band', (req, res) => {
+  contenfulClient.getEntries()
+    .then(response => {
+      res.send(
+        response.items
+          .filter(item => item.sys.contentType.sys.id === 'bands')
+          .map(band => band.fields)
+          .filter(band => {
+            return band.name.replace(/\s/g, '-').replace(/[^a-zA-Z\-]/g, '').toLowerCase() === req.params.band;
+          })
       );
     })
     .catch(err => {
